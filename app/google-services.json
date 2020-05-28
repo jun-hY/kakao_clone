@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1050073690902",
+    "firebase_url": "https://taehuktaehuk--why-you-mad.firebaseio.com",
+    "project_id": "taehuktaehuk--why-you-mad",
+    "storage_bucket": "taehuktaehuk--why-you-mad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050073690902:android:4914b33d37c1dfc0645637",
+        "android_client_info": {
+          "package_name": "com.example.kakao_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050073690902-7lvukhgpligii83efuos9qutle442vb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kakao_clone",
+            "certificate_hash": "677cfac1ca5d7ee1bc483009a71a5914f39dc0da"
+          }
+        },
+        {
+          "client_id": "1050073690902-imjdpc67id9qajhkohop62lr9qkjkopn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7c47zy8cXAxxWBl1YnW1mV5c18bqOmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050073690902-imjdpc67id9qajhkohop62lr9qkjkopn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
