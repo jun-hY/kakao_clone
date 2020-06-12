@@ -12,6 +12,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:id="@+id/them_profile"
             android:src="@drawable/ic_launcher_background">
         </androidx.appcompat.widget.AppCompatImageView>
 

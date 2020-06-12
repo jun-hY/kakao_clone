@@ -2,10 +2,19 @@ package com.example.kakao_clone;
 
 public class Chat {
 
+    private String profile;
     private String Name;
     private String chat;
 
     public Chat() {}
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
     public String getName() {
         return Name;
