@@ -30,6 +30,10 @@ public class ChattingActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>();
 
+        database = FirebaseDatabase.getInstance();
+
+        databaseReference = database.getReference("Chat");
+
     }
 
 }
