@@ -6,32 +6,32 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/sendtxt"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:ems="10"
-        android:gravity="start|top"
+        android:gravity="start|center_vertical"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/sendbtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/sendbtn"
         android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextMultiLine"
+        app:layout_constraintTop_toTopOf="@+id/sendtxt"
         app:srcCompat="@android:drawable/ic_menu_send" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chtscr"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/sendtxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
