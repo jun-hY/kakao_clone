@@ -68,14 +68,15 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
 
         //logging in the user
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()) {
-                            finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
+                            finish();
+                        }
+                        else {
                             Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_LONG).show();
                             textviewMessage.setText("로그인 실패 유형\n - password가 맞지 않습니다.\n -서버에러");
                         }
@@ -89,12 +90,12 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
             userLogin();
         }
         if(view == textviewSingin) {
-            finish();
             startActivity(new Intent(this, SignupActivity.class));
+            finish();
         }
         if(view == textviewFindPassword) {
-            finish();
             startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 
