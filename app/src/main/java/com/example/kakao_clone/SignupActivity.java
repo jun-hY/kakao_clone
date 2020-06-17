@@ -50,6 +50,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         //button click event
         buttonSignup.setOnClickListener(this);
         textviewSingin.setOnClickListener(this);
+
     }
 
     //Firebse creating a new user
@@ -92,13 +93,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     //button click event
     @Override
     public void onClick(View view) {
-        if(view == buttonSignup) {
-            //TODO
+        if(view == buttonSignup){
             registerUser();
         }
 
         if(view == textviewSingin) {
-            //TODO
             startActivity(new Intent(this, LoginActivity.class)); //추가해 줄 로그인 액티비티
             finish();
         }
