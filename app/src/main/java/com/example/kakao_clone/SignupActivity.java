@@ -51,6 +51,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         buttonSignup.setOnClickListener(this);
         textviewSingin.setOnClickListener(this);
 
+        if(firebaseAuth.getCurrentUser() != null) {
+
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            finish();
+        }
+
     }
 
     //Firebse creating a new user

@@ -1,5 +1,6 @@
 package com.example.kakao_clone;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button buttonChat;
     FirebaseAuth firebaseAuth;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
         buttonChat = (Button)findViewById(R.id.button2);
-
         if(firebaseAuth.getCurrentUser() == null) {
+
 
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
@@ -36,9 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view == buttonChat){
 
+            startActivity(new Intent(getApplicationContext(), ChattingActivity.class));
+
             finish();
 
-            startActivity(new Intent(getApplicationContext(), ChattingActivity.class));
         }
 
     }

@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LoginActivity  extends AppCompatActivity implements View.OnClickListener{
+
     EditText editTextEmail;
     EditText editTextPassword;
     Button buttonSignin;
@@ -49,7 +50,12 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         textviewSingin.setOnClickListener(this);
         textviewFindPassword.setOnClickListener(this);
 
+        if(firebaseAuth.getCurrentUser() != null) {
 
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            finish();
+        }
 
     }
     private void userLogin(){
@@ -76,6 +82,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                         progressDialog.dismiss();
                         if(task.isSuccessful()) {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                             finish();
                         }
                         else {
