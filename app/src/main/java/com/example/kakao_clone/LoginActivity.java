@@ -50,13 +50,6 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         textviewSingin.setOnClickListener(this);
         textviewFindPassword.setOnClickListener(this);
 
-        if(firebaseAuth.getCurrentUser() != null) {
-
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-            finish();
-        }
-
     }
     private void userLogin(){
         String email = editTextEmail.getText().toString().trim();
