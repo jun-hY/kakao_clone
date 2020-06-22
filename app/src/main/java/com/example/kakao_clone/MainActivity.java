@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonChat;
+    Button buttonLogin;
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
 
@@ -23,15 +24,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
         buttonChat = (Button)findViewById(R.id.button2);
-        if(firebaseAuth.getCurrentUser() == null) {
+        buttonLogin = (Button)findViewById(R.id.button3);
 
-
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-
-            finish();
-        }
 
         buttonChat.setOnClickListener(this);
+        buttonLogin.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +39,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             finish();
 
+        }
+        if(view == buttonLogin){
+
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+
+            finish();
         }
 
     }
