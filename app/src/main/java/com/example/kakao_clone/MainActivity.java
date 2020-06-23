@@ -37,14 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             startActivity(new Intent(getApplicationContext(), ChattingActivity.class));
 
-            finish();
-
         }
         if(view == buttonLogin){
 
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
 
-            finish();
         }
 
     }
