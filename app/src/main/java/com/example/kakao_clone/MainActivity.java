@@ -5,16 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonChat;
-    Button buttonLogin;
+    Button buttonLogout;
+    TextView textViewID;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     ProgressDialog progressDialog;
 
     @Override
@@ -24,11 +28,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
         buttonChat = (Button)findViewById(R.id.button2);
-        buttonLogin = (Button)findViewById(R.id.button3);
-
-
+        buttonLogout = (Button)findViewById(R.id.button3);
+        textViewID = (TextView) findViewById(R.id.textID);
+        firebaseUser = firebaseAuth.getCurrentUser();
         buttonChat.setOnClickListener(this);
-        buttonLogin.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
+
+        if(firebaseUser == null) {
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        }
+        else{
+            textViewID.setText(firebaseUser.getEmail());
+        }
     }
 
     @Override
@@ -38,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(getApplicationContext(), ChattingActivity.class));
 
         }
-        if(view == buttonLogin){
-
+        if(view == buttonLogout){
+            firebaseAuth.signOut();
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
 
         }

@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity  extends AppCompatActivity implements View.OnClickListener{
@@ -30,12 +31,14 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
     ProgressDialog progressDialog;
     //define firebase object
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
@@ -49,6 +52,13 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         buttonSignin.setOnClickListener(this);
         textviewSingin.setOnClickListener(this);
         textviewFindPassword.setOnClickListener(this);
+
+        if (firebaseUser != null){
+
+            finishAffinity();
+
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
 
     }
     private void userLogin(){
@@ -74,9 +84,11 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()) {
+
+                            finishAffinity();
+
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                            finish();
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_LONG).show();
@@ -96,7 +108,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
             finish();
         }
         if(view == textviewFindPassword) {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, FindpassActivity.class));
             finish();
         }
     }
