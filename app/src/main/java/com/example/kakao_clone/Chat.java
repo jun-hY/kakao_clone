@@ -1,5 +1,7 @@
 package com.example.kakao_clone;
 
+import android.text.Editable;
+
 import java.util.Date;
 
 public class Chat {
@@ -9,7 +11,7 @@ public class Chat {
     private String chat;
     private Date Date;
 
-    public Chat() {}
+    public Chat(String uid, String text, String formatDate) {}
 
     public Chat(String Name, String chat, Date Date) {
         this.Name = Name;

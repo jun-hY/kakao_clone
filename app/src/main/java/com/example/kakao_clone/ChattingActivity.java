@@ -1,35 +1,33 @@
 package com.example.kakao_clone;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ChattingActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Chat> arrayList;
 
-    private FirebaseFirestore db=null;
-    private StorageReference storageReference;
+    private FirebaseFirestore db;
+    private CollectionReference ChatRef;
+
+    private ChatAdapter adapter;
 
     private static final String TAG = "ChattingActivity";
 
@@ -38,33 +36,22 @@ public class ChattingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
-        final TextView sendTxt = findViewById(R.id.sendtxt);
+        final Intent chatIntent = getIntent();
+
+        final EditText sendTxt = findViewById(R.id.sendtxt);
         final ImageButton sendBtn = findViewById(R.id.sendbtn);
 
-        recyclerView = findViewById(R.id.chtscr);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>();
+        final String uid = chatIntent.getStringExtra("uid");
+        final String Chatting = sendTxt.getText().toString();
+
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdftime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        final String formatDate = sdftime.format(date);
 
         db = FirebaseFirestore.getInstance();
-        storageReference = FirebaseStorage.getInstance().getReference();
+        ChatRef = db.collection("messages");
 
-        Query query = FirebaseFirestore.getInstance()
-                .collection("messages")
-                .orderBy("timestamp").limit(50);
-
-        db.collection("Users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                arrayList.clear();
-                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-
-                }
-            }
-        });
+        setUpRecyclerView();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,9 +59,34 @@ public class ChattingActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(sendTxt.getText())) {
                     return;
                 }
+                ChatRef.add(new Chat(uid, Chatting, formatDate));
                 sendTxt.setText("");
             }
         });
     }
 
+    public void setUpRecyclerView() {
+        Query query = ChatRef.orderBy("timestamp", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<Chat> options = new FirestoreRecyclerOptions.Builder<Chat>()
+                .setQuery(query, Chat.class)
+                .build();
+
+        recyclerView = findViewById(R.id.chtscr);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 }
