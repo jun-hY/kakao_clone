@@ -1,12 +1,21 @@
 package com.example.kakao_clone;
 
+import java.util.Date;
+
 public class Chat {
 
     private String profile;
     private String Name;
     private String chat;
+    private Date Date;
 
     public Chat() {}
+
+    public Chat(String Name, String chat, Date Date) {
+        this.Name = Name;
+        this.chat = chat;
+        this.Date = Date;
+    }
 
     public String getProfile() {
         return profile;
@@ -14,6 +23,14 @@ public class Chat {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public Date getDate() {
+        return Date;
+    }
+
+    public void setDate(Date date) {
+        Date = date;
     }
 
     public String getName() {
