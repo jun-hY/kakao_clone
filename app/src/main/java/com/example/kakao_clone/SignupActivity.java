@@ -38,8 +38,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         //initializig firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
-
-
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
@@ -56,22 +54,39 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    private boolean isFindAlphaNum(String s){
+        char[] chars = s.toCharArray();
+        boolean[] result = {false,false};
+
+        result[0] = s.matches(".*[0-9].*");
+
+        for(char c : chars){
+            if(Character.isLetter(c)){
+                result[1] = true;
+                break;
+            }
+        }
+
+        return result[0] && result[1];
+    }
+
+
     //Firebse creating a new user
-    private void registerUser(){
+    private void registerUser() {
         //사용자가 입력하는 email, password를 가져온다.
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String passwordCheck = getEditTextPasswordCheck.getText().toString().trim();
 
         //email과 password가 비었는지 아닌지를 체크 한다.
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Email을 입력해 주세요.", Toast.LENGTH_SHORT).show();
             return;
-        } 
-        if(TextUtils.isEmpty(password)){
+        }
+        if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Password를 입력해 주세요.", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(passwordCheck)){
+        if (TextUtils.isEmpty(passwordCheck)) {
             Toast.makeText(this, "Password 확인을 입력해 주세요.", Toast.LENGTH_SHORT).show();
         }
 
@@ -80,7 +95,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog.show();
 
         //creating a new user
-        if(password.equals(passwordCheck)) {
+        if (password.length() >= 8 && password.equals(passwordCheck) && isFindAlphaNum(password)) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -88,8 +103,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                                 finish();
-                            }
-                            else {
+                            } else {
                                 //에러발생시
                                 textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n -암호 최소 6자리 이상 \n - 서버에러");
                                 Toast.makeText(SignupActivity.this, "등록 에러!", Toast.LENGTH_SHORT).show();
@@ -99,7 +113,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     });
         }
         else {
-            textviewMessage.setText("에러유형\n - 비밀번호 확인을 하세요. \n - 서버에러");
+            textviewMessage.setText("에러유형\n - 비밀번호를 확인을 하세요. \n - 비밀번호는 영어를 포함한 8자리 입니다.\n - 서버에러");
             progressDialog.dismiss();
         }
     }
