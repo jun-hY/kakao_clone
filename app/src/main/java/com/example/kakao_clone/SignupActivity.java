@@ -50,8 +50,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         //button click event
         buttonSignup.setOnClickListener(this);
         textviewSingin.setOnClickListener(this);
-
-
     }
 
     private boolean isFindAlphaNum(String s){
