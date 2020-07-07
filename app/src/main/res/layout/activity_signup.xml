@@ -14,13 +14,23 @@
         android:layout_marginTop="50dp"
         android:textSize="23dp"
         android:textColor="@color/colorAccent"
-        android:text="회원가입" />
+        android:text="회원가입"
+        />
 
     <TextView
         android:layout_gravity="center_horizontal"
         android:text="이 앱은 회원가입을 해야 정상적으로 사용할 수 있습니다.\n Email로 등록해 주세요."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:hint="Enter Name"
+        android:inputType="text"
+        android:privateImeOptions="defaultInputmode=korean"/>
 
     <EditText
         android:id="@+id/editTextEmail"

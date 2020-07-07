@@ -14,22 +14,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
 
     //define view objects
+    EditText editTextName;
     EditText editTextEmail;
     EditText editTextPassword;
-    EditText getEditTextPasswordCheck;
+    EditText editTextPasswordCheck;
     Button buttonSignup;
     TextView textviewSingin;
     TextView textviewMessage;
     ProgressDialog progressDialog;
     //define firebase object
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+    CollectionReference signUpRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +49,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         //initializig firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        signUpRef = firebaseFirestore.collection("Users");
         //initializing views
+        editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        getEditTextPasswordCheck = (EditText) findViewById(R.id.editTextPasswordCheck);
+        editTextPasswordCheck = (EditText) findViewById(R.id.editTextPasswordCheck);
         textviewSingin= (TextView) findViewById(R.id.textViewSignin);
         textviewMessage = (TextView) findViewById(R.id.textviewMessage);
         buttonSignup = (Button) findViewById(R.id.buttonSignup);
@@ -72,9 +86,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     //Firebse creating a new user
     private void registerUser() {
         //사용자가 입력하는 email, password를 가져온다.
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String passwordCheck = getEditTextPasswordCheck.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
+        final String passwordCheck = editTextPasswordCheck.getText().toString().trim();
+        final String name = editTextName.getText().toString().trim();
 
         //email과 password가 비었는지 아닌지를 체크 한다.
         if (TextUtils.isEmpty(email)) {
@@ -99,8 +114,28 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                finish();
+                                Map<String, Object> user  = new HashMap<>();
+                                user.put("username",name);
+                                user.put("usermsg","ㄴㅏ는 ㄱㅏ끔... 눈물을 흘린ㄷㅏ...");
+                                user.put("token",email);
+                                user.put("uid","");
+                                user.put("userid",email);
+                                firebaseFirestore.collection("Users")
+                                        .add(user)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                startActivity(new Intent(getApplicationContext(), SignUpPhoneActivity.class));
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                textviewMessage.setText("에러유형\n - 그러게요");
+                                                Toast.makeText(SignupActivity.this, "등록 에러!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             } else {
                                 //에러발생시
                                 textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n -암호 최소 6자리 이상 \n - 서버에러");
