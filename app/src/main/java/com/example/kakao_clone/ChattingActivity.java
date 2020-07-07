@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -28,9 +29,7 @@ public class ChattingActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference ChatRef = db.collection("Users")
-            .document(Uid).collection("rooms")
-            .document(Chatroom).collection("messages");
+    private CollectionReference ChatRef;
 
     private ChatAdapter adapter;
 
@@ -52,6 +51,12 @@ public class ChattingActivity extends AppCompatActivity {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdftime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         final String formatDate = sdftime.format(date);
+
+
+        ChatRef = db.collection("Users")
+                .document().collection("rooms")
+                .document().collection("messages");
+
 
         setUpRecyclerView();
 
