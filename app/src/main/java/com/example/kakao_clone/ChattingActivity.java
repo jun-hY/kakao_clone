@@ -7,32 +7,30 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ChattingActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference ChatRef = db.collection("Users")
-            .document().collection("rooms")
-            .document().collection("messages");
+    private FirebaseFirestore db;
+    private CollectionReference ChatRef;
+    private FirebaseUser uid;
+    private FirebaseAuth firebaseAuth;
 
     private ChatAdapter adapter;
+    private RecyclerView recyclerView;
+    private Date date;
 
     private static final String TAG = "ChattingActivity";
 
@@ -40,6 +38,12 @@ public class ChattingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+
+        uid = firebaseAuth.getInstance().getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        ChatRef = db.collection("Users")
+                .document().collection("rooms")
+                .document().collection("messages");
 
 //        final Intent chatIntent = getIntent();
 
@@ -49,25 +53,11 @@ public class ChattingActivity extends AppCompatActivity {
 //        final String uid = chatIntent.getStringExtra("uid");
         final String Chatting = sendTxt.getText().toString();
 
-        Date date = new Date(System.currentTimeMillis());
+        date = new Date(System.currentTimeMillis());
         SimpleDateFormat sdftime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         final String formatDate = sdftime.format(date);
 
         setUpRecyclerView();
-
-        ChatRef.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                   @Override
-                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       if (task.isSuccessful()) {
-                           for (QueryDocumentSnapshot document : task.getResult()) {
-                               Log.d(TAG, document.getId() + " => " + document.getData());
-                           }
-                       } else {
-                           Log.w(TAG, "Error getting documents.", task.getException());
-                       }
-                   }
-               });
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
