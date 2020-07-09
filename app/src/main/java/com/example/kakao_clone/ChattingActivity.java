@@ -21,15 +21,18 @@ import com.google.firebase.firestore.Query;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 public class ChattingActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private CollectionReference ChatRef;
-    private FirebaseUser uid;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     private ChatAdapter adapter;
     private RecyclerView recyclerView;
+    private String uid;
     private Date date;
 
     private static final String TAG = "ChattingActivity";
@@ -39,10 +42,13 @@ public class ChattingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
-        uid = firebaseAuth.getInstance().getCurrentUser();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        uid = firebaseUser.getEmail();
+
         db = FirebaseFirestore.getInstance();
         ChatRef = db.collection("Users")
-                .document().collection("rooms")
+                .document(uid).collection("rooms")
                 .document().collection("messages");
 
 //        final Intent chatIntent = getIntent();
