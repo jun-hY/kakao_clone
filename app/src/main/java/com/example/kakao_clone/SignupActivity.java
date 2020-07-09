@@ -126,7 +126,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                                 if (task.isSuccessful()) {
-                                                    startActivity(new Intent(getApplicationContext(), SignUpPhoneActivity.class));
+                                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                     finish();
                                                 }
                                             }

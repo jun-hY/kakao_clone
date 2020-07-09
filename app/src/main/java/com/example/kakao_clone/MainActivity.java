@@ -27,10 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
         buttonChat = (Button)findViewById(R.id.button2);
         buttonLogout = (Button)findViewById(R.id.button3);
         textViewID = (TextView) findViewById(R.id.textID);
-        firebaseUser = firebaseAuth.getCurrentUser();
         buttonChat.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
