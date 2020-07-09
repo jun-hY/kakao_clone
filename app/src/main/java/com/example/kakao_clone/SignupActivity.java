@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -122,17 +122,20 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                 user.put("userid",email);
                                 firebaseFirestore.collection("Users")
                                         .add(user)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                             @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                startActivity(new Intent(getApplicationContext(), SignUpPhoneActivity.class));
-                                                finish();
+                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                if (task.isSuccessful()) {
+                                                    startActivity(new Intent(getApplicationContext(), SignUpPhoneActivity.class));
+                                                    finish();
+                                                }
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                textviewMessage.setText("에러유형\n - 그러게요");
+                                                Log.e("실패 : ", String.valueOf(e));
+                                                textviewMessage.setText("에러유형\n - 그러게여");
                                                 Toast.makeText(SignupActivity.this, "등록 에러!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
