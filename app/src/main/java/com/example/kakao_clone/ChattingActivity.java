@@ -48,15 +48,12 @@ public class ChattingActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         ChatRef = db.collection("Users")
-                .document(uid).collection("rooms")
+                .document("asdfqw@gmail.com").collection("rooms")
                 .document("asdf").collection("messages");
-
-//        final Intent chatIntent = getIntent();
 
         final EditText sendTxt = findViewById(R.id.sendtxt);
         final ImageButton sendBtn = findViewById(R.id.sendbtn);
 
-//        final String uid = chatIntent.getStringExtra("uid");
         final String Chatting = sendTxt.getText().toString();
 
         date = new Date(System.currentTimeMillis());
@@ -71,7 +68,7 @@ public class ChattingActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(sendTxt.getText())) {
                     return;
                 }
-//                ChatRef.add(new Chat(uid, Chatting, formatDate));
+                ChatRef.add(new Chat(uid, Chatting, formatDate));
                 sendTxt.setText("");
             }
         });

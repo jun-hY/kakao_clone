@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,14 +122,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                 user.put("uid","");
                                 user.put("userid",email);
                                 firebaseFirestore.collection("Users")
-                                        .add(user)
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        .document(email)
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                                if (task.isSuccessful()) {
-                                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                                    finish();
-                                                }
+                                            public void onSuccess(Void aVoid) {
+                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                finish();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
