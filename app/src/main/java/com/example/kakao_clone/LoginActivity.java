@@ -29,6 +29,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
     TextView textviewMessage;
     TextView textviewFindPassword;
     ProgressDialog progressDialog;
+
     //define firebase object
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -108,7 +109,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
             finish();
         }
         if(view == textviewFindPassword) {
-            startActivity(new Intent(this, FindpassActivity.class));
+            startActivity(new Intent(this, SelectFindActivity.class));
             finish();
         }
     }

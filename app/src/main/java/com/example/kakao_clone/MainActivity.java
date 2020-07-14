@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(firebaseUser == null) {
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            finish();
         }
         else{
             textViewID.setText(firebaseUser.getEmail());
