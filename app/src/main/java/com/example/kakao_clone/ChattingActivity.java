@@ -49,7 +49,7 @@ public class ChattingActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         ChatRef = db.collection("Users")
                 .document(uid).collection("rooms")
-                .document().collection("messages");
+                .document("asdf").collection("messages");
 
 //        final Intent chatIntent = getIntent();
 
