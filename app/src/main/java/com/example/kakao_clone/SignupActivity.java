@@ -102,6 +102,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         if (TextUtils.isEmpty(passwordCheck)) {
             Toast.makeText(this, "Password 확인을 입력해 주세요.", Toast.LENGTH_SHORT).show();
         }
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "Name을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+        }
+
 
         //email과 password가 제대로 입력되어 있다면 계속 진행된다.
         progressDialog.setMessage("등록중입니다. 기다려 주세요...");
