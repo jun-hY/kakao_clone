@@ -125,6 +125,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                 user.put("token",email);
                                 user.put("uid","");
                                 user.put("userid",email);
+                                user.put("userpw",password);
                                 firebaseFirestore.collection("Users")
                                         .document(email)
                                         .set(user)
