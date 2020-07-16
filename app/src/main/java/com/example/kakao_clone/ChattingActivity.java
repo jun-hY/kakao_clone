@@ -54,20 +54,26 @@ public class ChattingActivity extends AppCompatActivity {
         final EditText sendTxt = findViewById(R.id.sendtxt);
         final ImageButton sendBtn = findViewById(R.id.sendbtn);
 
-        final String Chatting = sendTxt.getText().toString();
 
-        date = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdftime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        final String formatDate = sdftime.format(date);
+
+
 
         setUpRecyclerView();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(sendTxt.getText())) {
+
+                date = new Date(System.currentTimeMillis());
+                SimpleDateFormat sdftime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String formatDate = sdftime.format(date);
+
+                String Chatting = sendTxt.getText().toString();
+
+                if (TextUtils.isEmpty(Chatting)) {
                     return;
                 }
+//                Log.d(TAG, "Chatting is " + Chatting);
                 ChatRef.add(new Chat(uid, Chatting, formatDate));
                 sendTxt.setText("");
             }
@@ -80,6 +86,8 @@ public class ChattingActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<Chat> options = new FirestoreRecyclerOptions.Builder<Chat>()
                 .setQuery(query, Chat.class)
                 .build();
+
+        adapter = new ChatAdapter(options);
 
         recyclerView = findViewById(R.id.chtscr);
         recyclerView.setHasFixedSize(true);
