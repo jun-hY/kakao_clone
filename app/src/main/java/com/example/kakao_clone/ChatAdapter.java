@@ -24,10 +24,9 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<Chat, ChatAdapter.Chat
 
     @Override
     protected void onBindViewHolder(@NonNull ChatHolder chatHolder, int i, @NonNull Chat chat) {
-        chatHolder.TextChat.setText(chat.getChat());
-        chatHolder.TextName.setText(chat.getName());
-        Glide.with(chatHolder.itemView)
-                .load(chat.getProfile()).into(chatHolder.ProfileImage);
+        chatHolder.TextChat.setText(chat.getMsg());
+        chatHolder.TextName.setText(chat.getUid());
+        chatHolder.TextTime.setText(chat.getTimestamp());
     }
 
     @NonNull
@@ -40,13 +39,13 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<Chat, ChatAdapter.Chat
     class ChatHolder extends RecyclerView.ViewHolder {
         TextView TextName;
         TextView TextChat;
-        ImageView ProfileImage;
+        TextView TextTime;
 
         public ChatHolder(@NonNull View itemView) {
             super(itemView);
-            TextName = itemView.findViewById(R.id.UserName);
-            TextChat = itemView.findViewById(R.id.chatCon);
-            ProfileImage = itemView.findViewById(R.id.them_profile);
+            TextName = itemView.findViewById(R.id.uid);
+            TextChat = itemView.findViewById(R.id.msg);
+            TextTime = itemView.findViewById(R.id.timestamp);
         }
     }
 

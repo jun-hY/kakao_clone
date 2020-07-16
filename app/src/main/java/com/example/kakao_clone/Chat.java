@@ -2,52 +2,44 @@ package com.example.kakao_clone;
 
 import android.text.Editable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Chat {
 
-    private String profile;
-    private String Name;
-    private String chat;
-    private Date Date;
+    private String uid;
+    private String msg;
+    private String timestamp;
 
-    public Chat(String uid, String text, String formatDate) {}
+    public Chat() {}
 
-    public Chat(String Name, String chat, Date Date) {
-        this.Name = Name;
-        this.chat = chat;
-        this.Date = Date;
+    public Chat(String uid, String msg, String timestamp) {
+        this.uid = uid;
+        this.msg = msg;
+        this.timestamp = timestamp;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getUid() {
+        return uid;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public Date getDate() {
-        return Date;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setDate(Date date) {
-        Date = date;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public String getName() {
-        return Name;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getChat() {
-        return chat;
-    }
-
-    public void setChat(String chat) {
-        this.chat = chat;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
